@@ -1,6 +1,6 @@
 apiVersion: skaffold/v4beta11
 kind: Config
-manifests:
+manifests: # helps redirect skaffold to a custom directory
   rawYaml:
     - k8s-dev/*
 build: # doesnot push the image to dockerhub everytime we make a change
@@ -23,5 +23,5 @@ build: # doesnot push the image to dockerhub everytime we make a change
         manual:
           - src: "**/*"
             dest: .
-deploy:
-  kubectl: {}
+# Notes:
+# 1) Donot set imagePullPolicy : Always in k8s depl file, else skaffold will try to pull the image
