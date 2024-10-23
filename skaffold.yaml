@@ -1,0 +1,27 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+manifests:
+  rawYaml:
+    - k8s-dev/*
+build: # doesnot push the image to dockerhub everytime we make a change
+  local:
+    push: false
+  artifacts:
+    - image: sanyamgupta23/vpc-app-skaffold
+      context: web
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "**/*"
+            dest: .
+    - image: sanyamgupta23/server-app-skaffold
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "**/*"
+            dest: .
+deploy:
+  kubectl: {}
